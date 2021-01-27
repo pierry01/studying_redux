@@ -36,4 +36,6 @@ const Sidebar = ({ modules, dispatch }) => ( // dispatch -> Dispara actions para
   </aside>
 )
 
-export default connect(state => ({ modules: state.modules }))(Sidebar)
+export default connect(state => ({
+  modules: state.modules
+}))(Sidebar)
