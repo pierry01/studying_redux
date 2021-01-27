@@ -1,16 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import * as CourseActions from '../../store/actions/course'
 
-// Action para setar a aula ativa
-function toggleLesson(module, lesson) {
-  return {
-    type: 'TOGGLE_LESSON', // Qual é a ação que está sendo realizada - ÚNICA NO REDUX
-    module,
-    lesson
-  }
-}
-
-const Sidebar = ({ modules, dispatch }) => ( // dispatch -> Dispara actions para o Redux que serão ouvidas pelos reducers
+const Sidebar = ({ modules, toggleLesson }) => ( // dispatch -> Dispara actions para o Redux que serão ouvidas pelos reducers
   <aside>
     {modules.map(module => (
       <div key={module.id}>
@@ -21,7 +13,10 @@ const Sidebar = ({ modules, dispatch }) => ( // dispatch -> Dispara actions para
             <li key={lesson.id}>
               {lesson.title}
 
-              <button style={{ marginLeft: 15 }} onClick={() => dispatch(toggleLesson(module, lesson))}>
+              <button
+                style={{ marginLeft: 15 }}
+                onClick={() => toggleLesson(module, lesson)}
+              >
                 Selecionar
               </button>
             </li>
@@ -32,6 +27,12 @@ const Sidebar = ({ modules, dispatch }) => ( // dispatch -> Dispara actions para
   </aside>
 )
 
-export default connect(state => ({
+const mapStateToProps = state => ({
   modules: state.course.modules
-}))(Sidebar)
+})
+
+const mapDispatchToProps = dispatch => ({
+  toggleLesson: (module, lesson) => dispatch(CourseActions.toggleLesson(module, lesson))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
