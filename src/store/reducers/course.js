@@ -19,13 +19,14 @@ const INITIAL_STATE = {
 
 // Função que retorna o state inicial
 export default function course(state = INITIAL_STATE, action) { // state -> antes da alteração && action -> ação a realizar
-  if (action.type === 'TOGGLE_LESSON') {
-    return {
-      ...state, // copiar o estado que já existe
-      activeLesson: action.lesson, // sobrepor com o valor necessário
-      activeModule: action.module // sobrepor com o valor necessário
-    }
+  switch (action.type) {
+    case 'TOGGLE_LESSON':
+      return {
+        ...state, // copiar o estado que já existe
+        activeLesson: action.lesson, // sobrepor com o valor necessário
+        activeModule: action.module // sobrepor com o valor necessário
+      }
+    default:
+      return state
   }
-
-  return state
 }
